@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Secure Checkout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070b;--panel:rgba(255,255,255,.035);--line:rgba(255,255,255,.085);--text:#f5f5f7;--muted:#9898a8;--purple:#a970ff;--purple2:#6d5cff;--green:#55e58d;--danger:#ff7777}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 78% 0,rgba(109,92,255,.16),transparent 32%),radial-gradient(circle at 10% 28%,rgba(169,112,255,.08),transparent 30%),var(--bg);color:var(--text);font-family:'General Sans','Poppins',system-ui,sans-serif}
+body{padding-bottom:50px}.wrap{width:min(1060px,calc(100% - 32px));margin:auto}.top{padding:18px 0}.back{color:#b993ff;text-decoration:none;font-size:11px}.back:hover{text-decoration:underline}.checkout{padding:20px 0 0}.grid{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(330px,.94fr);gap:14px;align-items:start}.card{border:1px solid var(--line);background:var(--panel);border-radius:20px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.121),inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(18px)}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:9px;color:#b99aff;font-weight:700}.title{font-size:clamp(31px,5vw,48px);line-height:1.02;letter-spacing:-.05em;margin:10px 0}.title span{color:#b993ff}.muted{color:var(--muted);font-size:11px;line-height:1.7}.form{display:grid;gap:11px;margin-top:18px}.field-label{display:block;margin-bottom:5px;color:#c7ced9;font-size:9px;font-weight:600}.field{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:rgba(7,7,11,.72);color:#fff;outline:0;font:inherit;font-size:11px}.field:focus{border-color:rgba(169,112,255,.55);box-shadow:0 0 0 3px rgba(169,112,255,.10)}.phone-row{display:flex;gap:9px;align-items:stretch}.phone-picker{position:relative;width:138px;flex:0 0 138px}.phone-country{width:100%;height:100%;display:flex;align-items:center;justify-content:flex-start;gap:8px;cursor:pointer;text-align:left;position:relative;padding-left:11px!important;padding-right:8px!important}.phone-country-flag{width:24px;height:17px;object-fit:cover;border-radius:2px;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.12)}.phone-chevron{margin-left:auto;width:20px;height:20px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);border-radius:7px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02));color:#d9d6e2;line-height:1;transform:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 5px 14px rgba(0,0,0,.18)}.phone-chevron svg{width:11px;height:11px;display:block;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}.amount-row select.field,.form select.field{appearance:none;-webkit-appearance:none;background-color:rgba(7,7,11,.72);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m2.5 4.5 3.5 3.5 3.5-3.5' fill='none' stroke='%23d9d6e2' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;background-size:12px 12px;padding-right:38px!important;cursor:pointer}.phone-menu{position:absolute;left:0;top:calc(100% + 7px);width:100%;max-height:255px;overflow-y:auto;overflow-x:hidden;padding:5px;background:#101016;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 55px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.04);z-index:10050;display:none}.phone-menu.open{display:block}.phone-option{width:100%;min-height:38px;display:flex;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:#fff;font:inherit;font-size:11px;cursor:pointer;text-align:left}.phone-option:hover,.phone-option.active{background:rgba(169,112,255,.13)}.phone-option-code{font-weight:700;letter-spacing:.01em}.phone-number{flex:1;min-width:0}
+.select-wrap{position:relative;width:100%}.select-trigger{display:flex;align-items:center;justify-content:space-between;text-align:left;cursor:pointer;padding-right:11px!important}.select-chevron{width:18px;height:18px;display:grid;place-items:center;color:#d9d6e2;flex:0 0 auto;transition:transform .18s ease}.select-chevron svg{width:11px;height:11px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}.select-trigger[aria-expanded="true"] .select-chevron{transform:rotate(180deg)}.select-menu{position:absolute;left:0;right:0;top:calc(100% + 7px);max-height:230px;overflow:auto;padding:5px;background:#101016;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 55px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.04);z-index:10060;display:none}.select-menu.open{display:block}.select-option{width:100%;min-height:38px;display:flex;align-items:center;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:#fff;font:inherit;font-size:11px;cursor:pointer;text-align:left}.select-option:hover,.select-option.active{background:rgba(169,112,255,.13)}textarea.field{resize:vertical;min-height:96px}
+.amount-row{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:9px}.btn{width:100%;min-height:44px;border:1px solid rgba(255,255,255,.065);border-radius:999px;padding:12px 17px;background:linear-gradient(135deg,#fff,#ddd);color:#0b0b0e;box-shadow:0 14px 32px rgba(0,0,0,.12);font-weight:700;font-size:10px;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}
+.gateway-grid{display:grid;gap:8px;margin-top:14px}.gateway{position:relative;display:flex;align-items:center;gap:10px;width:100%;padding:13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);box-shadow:0 18px 45px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.035);color:#fff;text-align:left;cursor:pointer;transition:.2s}.gateway:hover{transform:translateY(-1px);border-color:rgba(169,112,255,.32);background:rgba(169,112,255,.05)}.gateway.selected{border-color:rgba(169,112,255,.55);background:rgba(169,112,255,.07);box-shadow:0 0 0 1px rgba(169,112,255,.16),0 18px 45px rgba(0,0,0,.12)}.gateway:focus-visible{outline:2px solid rgba(169,112,255,.65);outline-offset:2px}.gateway-icon{width:36px;height:36px;flex:0 0 36px;border-radius:9px;display:grid;place-items:center;background:#15151d;overflow:hidden}.gateway-icon img{width:100%;height:100%;object-fit:cover;display:block}.gateway-copy{flex:1;min-width:0}.gateway-copy strong{display:block;font-size:10px}.gateway-copy span{display:block;color:#858597;font-size:8px;margin-top:3px}.gateway-status{font-size:8px;margin-top:3px;color:#78e9a6}.gateway-status.pending{color:#aaa0bf}.check{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:transparent;font-size:11px;flex:0 0 20px}.gateway.selected .check{border-color:rgba(169,112,255,.75);background:rgba(169,112,255,.18);color:#fff}.gateway input{position:absolute;opacity:0;pointer-events:none}
+.summary{display:grid;gap:8px;margin-top:14px}.summary-row{display:flex;justify-content:space-between;gap:15px;padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035);box-shadow:inset 0 1px 0 rgba(255,255,255,.035);font-size:9px}.summary-row span{color:#7f8290}.summary-row b{max-width:65%;text-align:right;overflow-wrap:anywhere}.note,.success,.error{margin-top:12px;padding:11px 12px;border-radius:13px;font-size:9px;line-height:1.6}.note{border:1px solid rgba(169,112,255,.16);background:rgba(169,112,255,.055);color:#aaa0bf}.success{display:none;border:1px solid rgba(85,229,141,.18);background:rgba(85,229,141,.07);color:#83edac}.error{display:none;border:1px solid rgba(255,119,119,.2);background:rgba(255,119,119,.07);color:#ffaaaa}.status{margin-top:10px;font-size:9px;color:#8995a6;min-height:14px}.hidden{display:none!important}.small{font-size:8px;color:#707383;line-height:1.6;margin-top:9px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.checkout{padding-top:8px}.card{padding:16px}.amount-row{grid-template-columns:1fr 105px}}
+@media(prefers-reduced-motion:reduce){.gateway{transition:none}.gateway:hover{transform:none}}
+
+/* Multi-payment selection */
+.gateway.selected{border-color:rgba(169,112,255,.58)!important;background:linear-gradient(135deg,rgba(126,70,255,.16),rgba(255,255,255,.035))!important;box-shadow:0 0 0 1px rgba(169,112,255,.10),0 12px 30px rgba(75,35,150,.16)!important}.gateway .check{transition:.2s ease}.gateway.selected .check{opacity:1;transform:scale(1)}.gateway:not(.selected) .check{opacity:.28;transform:scale(.82)}.selected-methods{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.selected-methods span{padding:5px 8px;border-radius:999px;border:1px solid rgba(169,112,255,.22);background:rgba(169,112,255,.08);font-size:9px;color:#d9c8ff}
+</style>
+
+<style id="ethon-checkout-phone-dropdown-final">
+/* Country selector: field-style outer container; arrow has no separate outline box. */
+.phone-picker{
+  width:122px!important;
+  flex:0 0 122px!important;
+  position:relative!important;
+  display:flex!important;
+  align-items:stretch!important;
+  min-width:0!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:12px!important;
+  background:rgba(7,7,11,.72)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+}
+.phone-picker .phone-country,
+.phone-picker button{
+  width:100%!important;
+  height:100%!important;
+  min-height:43px!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  border-radius:11px!important;
+}
+.phone-picker .phone-country{padding-left:11px!important;padding-right:9px!important}
+.phone-picker .phone-chevron{
+  width:17px!important;
+  height:17px!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:0!important;
+}
+.phone-picker:focus-within{border-color:rgba(169,112,255,.55)!important;box-shadow:0 0 0 3px rgba(169,112,255,.10)!important}
+</style>
+</head>
+<body>
+<div class="wrap top"><a id="backText" class="back" href="/">← Back to portfolio</a></div>
+<main class="checkout"><div class="wrap grid">
+<section class="card">
+  <div id="checkoutEyebrow" class="eyebrow">Secure project checkout</div>
+  <h1 id="checkoutTitle" class="title">Let's turn your idea into <span>something real.</span></h1>
+  <p id="checkoutIntro" class="muted">Tell me what you need, choose your payment method, and send the payment request. Your request is securely recorded in the private admin inbox.</p>
+  <form id="checkoutForm" class="form" novalidate>
+    <label><span class="field-label">Full name</span><input class="field" id="name" autocomplete="name" required placeholder="Your name"></label>
+    <label><span class="field-label">Email</span><input class="field" id="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+    <label><span class="field-label">Phone</span><div class="phone-row">
+      <div class="phone-picker" id="phonePicker">
+        <button type="button" class="field phone-country" id="phoneCountryBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Country calling code"><img class="phone-country-flag" id="phoneCountryFlag" src="https://flagcdn.com/bd.svg" alt=""><span id="phoneCountryCode">+880</span><span class="phone-chevron" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m2.5 4.5 3.5 3.5 3.5-3.5"/></svg></span></button>
+        <div class="phone-menu" id="phoneCountryMenu" role="listbox" aria-label="Country calling codes"></div>
+        <input type="hidden" id="phoneCountry" value="+880">
+      </div>
+      <input class="field phone-number" id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Phone number">
+    </div></label>
+    <div class="amount-row">
+      <label><span class="field-label">Project amount</span><input class="field" id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" required placeholder="e.g. 500"></label>
+      <label><span class="field-label">Currency</span><div class="select-wrap" id="currencyPicker"><button type="button" class="field select-trigger" id="currencyBtn" aria-haspopup="listbox" aria-expanded="false"><span id="currencyValue">USD $</span><span class="select-chevron" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m2.5 4.5 3.5 3.5 3.5-3.5"/></svg></span></button><div class="select-menu" id="currencyMenu" role="listbox"></div><input type="hidden" id="currency" value="USD"></div></label>
+    </div>
+    <label><span class="field-label">Service</span><div class="select-wrap" id="servicePicker"><button type="button" class="field select-trigger" id="serviceBtn" aria-haspopup="listbox" aria-expanded="false"><span id="serviceValue">UI/UX Design</span><span class="select-chevron" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m2.5 4.5 3.5 3.5 3.5-3.5"/></svg></span></button><div class="select-menu" id="serviceMenu" role="listbox"></div><input type="hidden" id="service" value="UI/UX Design"></div></label>
+    <label><span class="field-label">Project details</span><textarea class="field" id="message" rows="4" maxlength="5000" placeholder="Briefly describe your project..."></textarea></label>
+    <button id="checkoutButton" class="btn" type="submit">Create payment request</button>
+  </form>
+  <div id="error" class="error"></div>
+  <div id="success" class="success"></div>
+</section>
+
+<aside class="card">
+  <div id="paymentProviderLabel" class="eyebrow">Payment gateways</div>
+  <h2 id="paymentTitle" style="font-size:17px;margin:8px 0 4px">Choose a secure payment method</h2>
+  <p id="paymentDescription" class="muted">Select one or more payment methods. Your requested budget will be attached to the payment request and invoice.</p>
+  <div id="gatewayGrid" class="gateway-grid" aria-label="Payment gateway selection">
+    <button type="button" class="gateway" data-method="STRIPE" data-name="Stripe" data-url-key="paymentStripeUrl"><span class="gateway-icon"><img src="assets/payment-gateways/Stripe.png" alt="Stripe"></span><span class="gateway-copy"><strong>Stripe</strong><span>Credit / debit card • secure checkout</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+    <button type="button" class="gateway" data-method="PAYPAL" data-name="PayPal" data-url-key="paymentPaypalUrl"><span class="gateway-icon"><img src="assets/payment-gateways/Paypal.png" alt="PayPal"></span><span class="gateway-copy"><strong>PayPal</strong><span>Fast wallet checkout</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+    <button type="button" class="gateway" data-method="PAYONEER" data-name="Payoneer" data-url-key="paymentPayoneerUrl"><span class="gateway-icon"><img src="assets/payment-gateways/Payoneer.png" alt="Payoneer"></span><span class="gateway-copy"><strong>Payoneer</strong><span>International payment</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+    <button type="button" class="gateway" data-method="GOOGLE PAY" data-name="Google Pay" data-url-key="paymentGooglePayUrl"><span class="gateway-icon"><img src="assets/payment-gateways/GooglePay.png" alt="Google Pay"></span><span class="gateway-copy"><strong>Google Pay</strong><span>Fast wallet checkout</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+    <button type="button" class="gateway" data-method="BINANCE PAY" data-name="Binance Pay" data-url-key="paymentBinanceUrl"><span class="gateway-icon"><img src="assets/payment-gateways/Binance.jpg" alt="Binance Pay"></span><span class="gateway-copy"><strong>Binance Pay</strong><span>Crypto payment checkout</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+    <button type="button" class="gateway" data-method="BKASH" data-name="bKash" data-url-key="paymentBkashUrl"><span class="gateway-icon"><img src="assets/payment-gateways/bkash.png" alt="bKash"></span><span class="gateway-copy"><strong>bKash</strong><span>Bangladesh mobile payment</span><small class="gateway-status">Checking setup…</small></span><span class="check" aria-hidden="true">✓</span></button>
+  </div>
+  <div class="summary">
+    <div class="summary-row"><span>Payment method</span><b id="summaryMethod">—</b></div>
+    <div class="summary-row"><span>Amount</span><b id="summaryAmount">—</b></div>
+    <div class="summary-row"><span>Service</span><b id="summaryService">—</b></div>
+    <div class="summary-row"><span>Payment request</span><b id="summaryId">Not created</b></div>
+  </div>
+  <div id="paymentConfirmNote" class="note">Choose a payment method above. Your payment request will be sent to the admin inbox before any configured checkout link is opened.</div>
+  <div id="status" class="status" aria-live="polite"></div>
+  <div class="small">Your card, wallet, or account credentials are never collected by this form.</div>
+</aside>
+</div></main>
+<script src="assets/countries.js"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let SETTINGS={};
+let selectedGateways=[];
+
+const defaultServices=['UI/UX Design','Mobile App UI/UX','Frontend Development','Website / Landing Page','UI/UX + Frontend Development'];
+const gatewayNodes=[...document.querySelectorAll('.gateway')];
+const phoneCountry=$('phoneCountry');
+const phoneCountryBtn=$('phoneCountryBtn');
+const phoneCountryMenu=$('phoneCountryMenu');
+const phoneCountryFlag=$('phoneCountryFlag');
+const phoneCountryCode=$('phoneCountryCode');
+function flagUrl(iso){return `https://flagcdn.com/${String(iso||'').toLowerCase()}.svg`}
+function closePhoneMenu(){if(phoneCountryMenu){phoneCountryMenu.classList.remove('open');phoneCountryBtn?.setAttribute('aria-expanded','false')}}
+function setPhoneCountry(country){if(!country)return;phoneCountry.value=country.code;phoneCountryFlag.src=flagUrl(country.iso);phoneCountryCode.textContent=country.code;phoneCountryMenu?.querySelectorAll('.phone-option').forEach(o=>o.classList.toggle('active',o.dataset.iso===country.iso&&o.dataset.code===country.code));closePhoneMenu()}
+if(phoneCountry&&phoneCountryMenu&&Array.isArray(window.ETHON_COUNTRIES)){
+  phoneCountryMenu.innerHTML=window.ETHON_COUNTRIES.map(c=>`<button type="button" class="phone-option" role="option" data-iso="${c.iso}" data-code="${c.code}"><img class="phone-country-flag" src="${flagUrl(c.iso)}" alt="" loading="lazy" decoding="async"><span class="phone-option-code">${c.code}</span></button>`).join('');
+  const bd=window.ETHON_COUNTRIES.find(c=>c.iso==='BD')||window.ETHON_COUNTRIES[0];
+  setPhoneCountry(bd);
+  phoneCountryBtn?.addEventListener('click',()=>{const open=phoneCountryMenu.classList.toggle('open');phoneCountryBtn.setAttribute('aria-expanded',String(open))});
+  phoneCountryMenu.addEventListener('click',e=>{const option=e.target.closest('.phone-option');if(option)setPhoneCountry({iso:option.dataset.iso,code:option.dataset.code})});
+  document.addEventListener('click',e=>{if(!e.target.closest('#phonePicker'))closePhoneMenu()});
+}
+
+function text(id,value){const el=$(id);if(el&&value!=null)el.textContent=String(value)}
+function cleanButtonText(value,fallback){const v=String(value||fallback||'').replace(/[→↗➜➝⟶]+/g,'').replace(/\s+/g,' ').trim();return v||fallback}
+function splitOptions(value,fallback){const raw=String(value||'').split('|').map(x=>x.trim()).filter(Boolean);return raw.length?raw:fallback}
+const currencyLabels={USD:'USD $',GBP:'GBP £',EUR:'EUR €',BDT:'BDT ৳'};
+let serviceOptions=[...defaultServices],currencyOptions=['USD','GBP','EUR','BDT'];
+function setupSelect(pickerId,btnId,menuId,valueId,inputId,items,labelFn){const picker=$(pickerId),btn=$(btnId),menu=$(menuId),value=$(valueId),input=$(inputId);if(!picker||!btn||!menu||!value||!input)return;menu.innerHTML=items.map(x=>`<button type="button" class="select-option" role="option" data-value="${escapeHtml(x)}">${escapeHtml(labelFn(x))}</button>`).join('');const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false')};const set=v=>{const val=items.includes(v)?v:items[0];input.value=val;value.textContent=labelFn(val);menu.querySelectorAll('.select-option').forEach(o=>o.classList.toggle('active',o.dataset.value===val));close();updateSummary()};btn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.select-menu.open').forEach(m=>{if(m!==menu){m.classList.remove('open');m.parentElement.querySelector('.select-trigger')?.setAttribute('aria-expanded','false')}});const open=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(open))};menu.onclick=e=>{const o=e.target.closest('.select-option');if(o)set(o.dataset.value)};document.addEventListener('click',e=>{if(!e.target.closest('#'+pickerId))close()});return {set,close,render:(arr)=>{items=arr;menu.innerHTML=items.map(x=>`<button type="button" class="select-option" role="option" data-value="${escapeHtml(x)}">${escapeHtml(labelFn(x))}</button>`).join('');set(input.value)}}}
+let serviceSelect=setupSelect('servicePicker','serviceBtn','serviceMenu','serviceValue','service',serviceOptions,x=>x);
+let currencySelect=setupSelect('currencyPicker','currencyBtn','currencyMenu','currencyValue','currency',currencyOptions,x=>currencyLabels[x]||x);
+function fillServices(value){serviceOptions=splitOptions(value,defaultServices);serviceSelect?.render(serviceOptions)}
+function fillCurrencies(value,current){currencyOptions=['USD','GBP','EUR','BDT'];currencySelect?.render(currencyOptions);currencySelect?.set(String(current||'USD').toUpperCase())}
+function escapeHtml(value){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function formatAmount(){const amount=$('amount').value.trim();const currency=$('currency').value;if(!amount)return '—';return `${amount} ${currency}`}
+function updateSummary(){text('summaryMethod',selectedGateways.length?selectedGateways.map(g=>g.name).join(' + '):'—');text('summaryAmount',formatAmount());text('summaryService',$('service').value||'—')}
+function selectGateway(node){const method=String(node.dataset.method||'').toUpperCase();const exists=selectedGateways.some(g=>g.method===method);if(exists){selectedGateways=selectedGateways.filter(g=>g.method!==method)}else{selectedGateways.push({method,name:node.dataset.name,url:node.dataset.url||''})}gatewayNodes.forEach(g=>{const on=selectedGateways.some(x=>x.method===String(g.dataset.method||'').toUpperCase());g.classList.toggle('selected',on);g.setAttribute('aria-pressed',String(on))});updateSummary();text('paymentConfirmNote',selectedGateways.length?'Your request, selected budget, and invoice will be created for all selected payment methods.':'Select at least one payment method.');}
+function setGatewaySetup(){const order=Array.isArray(SETTINGS.paymentGatewayOrder)?SETTINGS.paymentGatewayOrder:splitOptions(SETTINGS.paymentMethods,'STRIPE|PAYPAL|PAYONEER|GOOGLE PAY|BINANCE PAY|BKASH');const idMap={'STRIPE':'STRIPE','PAYPAL':'PAYPAL','PAYONEER':'PAYONEER','GOOGLE PAY':'GOOGLE PAY','BINANCE PAY':'BINANCE PAY','BKASH':'BKASH'};const rank=new Map(order.map((x,i)=>[String(x).trim().toUpperCase(),i]));gatewayNodes.sort((a,b)=>(rank.get(a.dataset.method) ?? 999)-(rank.get(b.dataset.method) ?? 999)).forEach(g=>$('gatewayGrid').appendChild(g));const enabled=SETTINGS.paymentEnabled!==false;gatewayNodes.forEach(g=>{const url=String(SETTINGS[g.dataset.urlKey]||'').trim();g.dataset.url=url;const status=g.querySelector('.gateway-status');if(!enabled){status.textContent='Payments currently unavailable';status.classList.add('pending')}else if(url){status.textContent='Configured checkout';status.classList.remove('pending')}else{status.textContent='Payment link not configured';status.classList.add('pending')}});gatewayNodes.forEach(g=>{g.classList.remove('selected');g.setAttribute('aria-pressed','false')});selectedGateways=[]}
+function showError(message){$('error').textContent=message;$('error').style.display='block';$('success').style.display='none'}
+function showSuccess(message){$('success').textContent=message;$('success').style.display='block';$('error').style.display='none'}
+async function init(){
+  try{
+    const r=await fetch('/api/public',{cache:'no-store'});const d=await r.json();SETTINGS=d.settings||{};
+    const params=new URLSearchParams(location.search);
+    const presetAmount=Number(params.get('amount'));
+    const presetCurrency=String(params.get('currency')||'').toUpperCase();
+    const presetService=params.get('service')||'';
+    const presetScope=params.get('scope')||'';
+    if(Number.isFinite(presetAmount)&&presetAmount>0) $('amount').value=presetAmount.toFixed(2).replace(/\.00$/,'');
+    if(['USD','GBP','EUR','BDT'].includes(presetCurrency)) $('currency').value=presetCurrency;
+    if(presetScope){const m=decodeURIComponent(presetScope);$('message').value=`Estimator scope: ${m}`;}
+    document.title=SETTINGS.checkoutPageTitle||'Secure Project Checkout';
+    text('checkoutEyebrow',SETTINGS.checkoutEyebrow||'Secure project checkout');
+    if(SETTINGS.checkoutTitle){$('checkoutTitle').innerHTML=String(SETTINGS.checkoutTitle).replace(/\n/g,'<br>')}
+    text('checkoutIntro',SETTINGS.checkoutIntro||'Tell me what you need, choose your payment method, and send the payment request. Your request is securely recorded in the private admin inbox.');
+    text('checkoutButton',cleanButtonText(SETTINGS.checkoutButtonText,'Create payment request'));
+    text('paymentTitle',SETTINGS.paymentTitle||'Choose a secure payment method');
+    text('paymentDescription',SETTINGS.paymentDescription||'Select one or more payment methods. Your requested budget will be attached to the payment request and invoice.');
+    text('backText',SETTINGS.checkoutBackText||'← Back to portfolio');
+    text('paymentConfirmNote',SETTINGS.paymentConfirmNote||'Choose a payment method above. Your payment request will be sent to the admin inbox before any configured checkout link is opened.');
+    fillServices(SETTINGS.checkoutServiceOptions);fillCurrencies(SETTINGS.paymentCurrencies,presetCurrency||SETTINGS.paymentCurrency);if(presetService){if(!serviceOptions.includes(presetService)){serviceOptions=[presetService,...serviceOptions];serviceSelect?.render(serviceOptions);}serviceSelect?.set(presetService);}setGatewaySetup();updateSummary();
+  }catch(err){
+    console.warn(err);fillServices();fillCurrencies();gatewayNodes.forEach(g=>{g.dataset.url='';const st=g.querySelector('.gateway-status');st.textContent='Setup unavailable';st.classList.add('pending');g.classList.remove('selected')});selectedGateways=[];updateSummary();text('status','Could not load checkout settings. You can still submit a payment request.');
+  }
+}
+
+gatewayNodes.forEach(g=>g.addEventListener('click',()=>selectGateway(g)));
+$('amount').addEventListener('input',updateSummary);$('currency').addEventListener('change',updateSummary);$('service').addEventListener('change',updateSummary);
+$('checkoutForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  $('status').textContent='';
+  if(!selectedGateways.length){showError('Please choose at least one payment method.');return}
+  if(!$('checkoutForm').checkValidity()){$('checkoutForm').reportValidity();return}
+  const amount=Number($('amount').value);if(!Number.isFinite(amount)||amount<=0){showError('Please enter a valid project amount.');return}
+  const button=$('checkoutButton');button.disabled=true;button.textContent='Creating request…';
+  const phoneNumber=$('phone').value.trim();const body={name:$('name').value.trim(),email:$('email').value.trim(),phone:phoneNumber?`${$('phoneCountry').value||'+880'} ${phoneNumber}`:'',amount,currency:$('currency').value,service:$('service').value,methods:selectedGateways.map(g=>g.method),method:selectedGateways.map(g=>g.method).join(', '),message:$('message').value.trim(),estimator:{service:$('service').value,amount,currency:$('currency').value,scope:$('message').value.trim()}};
+  try{
+    const r=await fetch('/api/payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const j=await r.json();if(!r.ok)throw new Error(j.error||'Unable to create payment request');
+    text('summaryId',j.paymentRequestId||'Created');
+    showSuccess(`Payment request ${j.paymentRequestId||'created'} successfully. Your invoice and payment voucher are ready.`);text('status',`Invoice: ${j.invoiceUrl||'/invoice.html'} · Voucher: ${j.voucherUrl||'/payment-voucher.html'}`);setTimeout(()=>{window.location.assign(j.invoiceUrl||j.voucherUrl||(`/invoice.html?id=${encodeURIComponent(j.paymentRequestId||'')}`))},700);
+  }catch(err){showError(err.message||'Unable to create payment request.');text('status','Please try again.')}finally{button.disabled=false;button.textContent=cleanButtonText(SETTINGS.checkoutButtonText,'Create payment request')}
+});
+init();
+</script>
+</body>
+</html>
